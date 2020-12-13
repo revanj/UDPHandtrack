@@ -4,13 +4,13 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/revanj/Desktop/cvtest/DisplayImage.cpp" "/home/revanj/Desktop/cvtest/CMakeFiles/DisplayImage.dir/DisplayImage.cpp.o"
+  "D:/opencvHandtrack/DisplayImage.cpp" "D:/opencvHandtrack/CMakeFiles/DisplayImage.dir/DisplayImage.cpp.obj"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "MSVC")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/usr/include/opencv4"
+  "D:/opencv/build/include"
   )
 
 # Targets to which this target links.

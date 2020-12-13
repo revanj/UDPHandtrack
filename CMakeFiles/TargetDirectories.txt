@@ -1,3 +1,3 @@
-/home/revanj/Desktop/cvtest/CMakeFiles/rebuild_cache.dir
-/home/revanj/Desktop/cvtest/CMakeFiles/edit_cache.dir
-/home/revanj/Desktop/cvtest/CMakeFiles/DisplayImage.dir
+D:/opencvHandtrack/CMakeFiles/DisplayImage.dir
+D:/opencvHandtrack/CMakeFiles/edit_cache.dir
+D:/opencvHandtrack/CMakeFiles/rebuild_cache.dir
