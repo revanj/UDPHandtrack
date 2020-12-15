@@ -4,8 +4,10 @@
 #include <iostream>
 #include <vector>
 #include <opencv2/features2d.hpp>
+
 using namespace cv;
-const int max_value_H = 360/2;
+using std::vector;
+const int max_value_H = 360 / 2;
 const int max_value = 255;
 const String window_capture_name = "Video Capture";
 const String window_detection_name = "Object Detection";
@@ -17,45 +19,47 @@ int size_thresh = 100;
 int thresh = 100;
 Mat frame_threshold, frame;
 RNG rng(12342);
-static void on_low_H_thresh_trackbar(int, void *)
-{
-    low_H = min(high_H-1, low_H);
+
+int send(String str);
+
+static void on_low_H_thresh_trackbar(int, void *) {
+    low_H = min(high_H - 1, low_H);
     setTrackbarPos("Low H", window_detection_name, low_H);
 }
-static void on_high_H_thresh_trackbar(int, void *)
-{
-    high_H = max(high_H, low_H+1);
+
+static void on_high_H_thresh_trackbar(int, void *) {
+    high_H = max(high_H, low_H + 1);
     setTrackbarPos("High H", window_detection_name, high_H);
 }
-static void on_low_S_thresh_trackbar(int, void *)
-{
-    low_S = min(high_S-1, low_S);
+
+static void on_low_S_thresh_trackbar(int, void *) {
+    low_S = min(high_S - 1, low_S);
     setTrackbarPos("Low S", window_detection_name, low_S);
 }
-static void on_high_S_thresh_trackbar(int, void *)
-{
-    high_S = max(high_S, low_S+1);
+
+static void on_high_S_thresh_trackbar(int, void *) {
+    high_S = max(high_S, low_S + 1);
     setTrackbarPos("High S", window_detection_name, high_S);
 }
-static void on_low_V_thresh_trackbar(int, void *)
-{
-    low_V = min(high_V-1, low_V);
+
+static void on_low_V_thresh_trackbar(int, void *) {
+    low_V = min(high_V - 1, low_V);
     setTrackbarPos("Low V", window_detection_name, low_V);
 }
-static void on_high_V_thresh_trackbar(int, void *)
-{
+
+static void on_high_V_thresh_trackbar(int, void *) {
     setTrackbarPos("Size Thresh", window_detection_name, size_thresh);
 }
-static void on_size_thresh_trackbar(int, void *)
-{
-    high_V = max(high_V, low_V+1);
+
+static void on_size_thresh_trackbar(int, void *) {
+    high_V = max(high_V, low_V + 1);
     setTrackbarPos("High V", window_detection_name, high_V);
 }
-void thresh_callback(int, void* );
 
-int main(int argc, char* argv[])
-{
-    VideoCapture cap(argc > 1 ? atoi(argv[1]) : 1);
+void thresh_callback(int, void *);
+
+int main(int argc, char *argv[]) {
+    VideoCapture cap(argc > 1 ? atoi(argv[1]) : 2);
     namedWindow(window_capture_name);
     namedWindow(window_detection_name);
     // Trackbars to set thresholds for HSV values
@@ -69,62 +73,168 @@ int main(int argc, char* argv[])
     Mat frame_HSV;
     while (true) {
         cap >> frame;
-        if(frame.empty())
-        {
+        if (frame.empty()) {
             break;
         }
         // Convert from BGR to HSV colorspace
-        top = (int) (0.05*frame.rows); bottom = top;
-        left = (int) (0.05*frame.cols); right = left;
+        top = (int) (0.05 * frame.rows);
+        bottom = top;
+        left = (int) (0.05 * frame.cols);
+        right = left;
         cvtColor(frame, frame_HSV, COLOR_BGR2HSV);
         // Detect the object based on HSV Range Values
         inRange(frame_HSV, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), frame_threshold);
-        copyMakeBorder( frame_threshold, frame_threshold, top, bottom, left, right, borderType, Scalar(0,0,0) );
+        copyMakeBorder(frame_threshold, frame_threshold, top, bottom, left, right, borderType, Scalar(0, 0, 0));
         // Show the frames
 
 
 
-        Mat kernel = cv::getStructuringElement(MORPH_ELLIPSE,Size(9,9));
+        Mat kernel = cv::getStructuringElement(MORPH_ELLIPSE, Size(9, 9));
         erode(frame_threshold, frame_threshold, kernel);
         erode(frame_threshold, frame_threshold, kernel);
         erode(frame_threshold, frame_threshold, kernel);
 
-        morphologyEx(frame_threshold,frame_threshold, MORPH_DILATE, kernel);
-        morphologyEx(frame_threshold,frame_threshold, MORPH_DILATE, kernel);
+        morphologyEx(frame_threshold, frame_threshold, MORPH_DILATE, kernel);
+        morphologyEx(frame_threshold, frame_threshold, MORPH_DILATE, kernel);
         imshow(window_detection_name, frame_threshold);
 
         imshow(window_capture_name, frame);
         //imshow(window_detection_name, frame_threshold);
         char key = (char) waitKey(30);
-        if (key == 'q' || key == 27)
-        {
+        if (key == 'q' || key == 27) {
             break;
         }
         //blur(frame_threshold, frame_threshold, Size(5,5));
 
         const int max_thresh = 255;
-        createTrackbar( "Canny thresh:", window_detection_name, &thresh, 20, thresh_callback );
+        createTrackbar("Canny thresh:", window_detection_name, &thresh, 20, thresh_callback);
         //frame_threshold.convertTo(frame_threshold, CV_32SC1);
         thresh_callback(0, 0);
+
 
     }
     return 0;
 }
 
-void thresh_callback(int, void* )
-{
+void thresh_callback(int, void *) {
     Mat canny_output;
-    Canny(frame_threshold, canny_output, thresh, thresh*2 );
-    std::vector<std::vector<Point> > contours;
-    std::vector<Vec4i> hierarchy;
+    Canny(frame_threshold, canny_output, thresh, thresh * 2);
+    vector<vector<Point> > contours;
+    vector<Vec4i> hierarchy;
     //frame_threshold.convertTo(frame_threshold, CV_32SC1);
-    findContours( frame_threshold, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE );
-    Mat drawing = Mat::zeros( canny_output.size(), CV_8UC3 );
-    for( size_t i = 0; i< contours.size(); i++ )
-    {
-        if (cv::contourArea(contours[i]) < size_thresh) continue;
-        Scalar color = Scalar( rng.uniform(0, 256), rng.uniform(0,256), rng.uniform(0,256) );
-        drawContours( drawing, contours, (int)i, color, 2, LINE_8, hierarchy, 0 );
+    findContours(frame_threshold, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    if (contours.size() == 0) return;
+    vector<vector<Point> > contours_poly(contours.size());
+    vector<Rect> boundRect(contours.size());
+    vector<Point2f> centers(contours.size());
+
+    vector<float> radius(contours.size());
+    double largestArea = 0.0;
+    int largetIndex = 0;
+    for (size_t i = 0; i < contours.size(); ++i) {
+        if (contourArea(contours[i]) > largestArea) {
+            largestArea = contourArea(contours[i]);
+            largetIndex = i;
+        }
     }
-    imshow( "Contours", drawing );
+    RotatedRect minRect, minEllipse;
+    minRect = minAreaRect(contours[largetIndex]);
+    if( contours[largetIndex].size() > 5 )
+    {
+        minEllipse = fitEllipse( contours[largetIndex] );
+    }
+
+    approxPolyDP(contours[largetIndex], contours_poly[largetIndex], 3, true);
+    boundRect[largetIndex] = boundingRect(contours_poly[largetIndex]);
+    minEnclosingCircle(contours_poly[largetIndex], centers[largetIndex], radius[largetIndex]);
+
+    Mat drawing = Mat::zeros(canny_output.size(), CV_8UC3);
+    Scalar color = Scalar(rng.uniform(0, 256), rng.uniform(0, 256), rng.uniform(0, 256));
+    drawContours(drawing, contours_poly, (int) largetIndex, color);
+    //rectangle(drawing, boundRect[largetIndex].tl(), boundRect[largetIndex].br(), color, 2);
+    //circle(drawing, centers[largetIndex], (int) radius[largetIndex], color, 2);
+    ellipse( drawing, minEllipse, color, 2 );
+    Point2f rect_points[4];
+    minRect.points( rect_points );
+
+    for ( int j = 0; j < 4; j++ )
+    {
+        line( drawing, rect_points[j], rect_points[(j+1)%4], color );
+    }
+    imshow("Contours", drawing);
+    String tosend = std::to_string(minEllipse.size.width) + " " + std::to_string(minEllipse.size.height) + " "
+                    + std::to_string(minEllipse.center.x) + std::to_string(minEllipse.center.y) + " "
+                    + std::to_string(minEllipse.angle) + " \n";
+    send(tosend);
+}
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <memory.h>
+#include <ifaddrs.h>
+#include <net/if.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <iostream>
+
+
+int resolvehelper(const char* hostname, int family, const char* service, sockaddr_storage* pAddr)
+{
+    int result;
+    addrinfo* result_list = NULL;
+    addrinfo hints = {};
+    hints.ai_family = family;
+    hints.ai_socktype = SOCK_DGRAM; // without this flag, getaddrinfo will return 3x the number of addresses (one for each socket type).
+    result = getaddrinfo(hostname, service, &hints, &result_list);
+    if (result == 0)
+    {
+        //ASSERT(result_list->ai_addrlen <= sizeof(sockaddr_in));
+        memcpy(pAddr, result_list->ai_addr, result_list->ai_addrlen);
+        freeaddrinfo(result_list);
+    }
+
+    return result;
+}
+
+
+int send(String str)
+{
+    int result = 0;
+    int sock = socket(AF_INET, SOCK_DGRAM, 0);
+
+    char szIP[100];
+
+    sockaddr_in addrListen = {}; // zero-int, sin_port is 0, which picks a random port for bind.
+    addrListen.sin_family = AF_INET;
+    result = bind(sock, (sockaddr*)&addrListen, sizeof(addrListen));
+    if (result == -1)
+    {
+        int lasterror = errno;
+        std::cout << "error: " << lasterror;
+        exit(1);
+    }
+
+
+    sockaddr_storage addrDest = {};
+    result = resolvehelper("127.0.0.1", AF_INET, "9000", &addrDest);
+    if (result != 0)
+    {
+        int lasterror = errno;
+        std::cout << "error: " << lasterror;
+        exit(1);
+    }
+
+    const char* msg = str.c_str();
+    size_t msg_length = strlen(msg);
+
+    result = sendto(sock, msg, msg_length, 0, (sockaddr*)&addrDest, sizeof(addrDest));
+
+    std::cout << result << " bytes sent" << std::endl;
+
+    return 0;
+
 }
