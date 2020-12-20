@@ -58,7 +58,7 @@ static void on_size_thresh_trackbar(int, void *) {
 void thresh_callback(int, void *);
 
 int main(int argc, char *argv[]) {
-    VideoCapture cap(argc > 1 ? atoi(argv[1]) : 2);
+    VideoCapture cap(argc > 1 ? atoi(argv[1]) : 0);
     namedWindow(window_capture_name);
     namedWindow(window_detection_name);
     // Trackbars to set thresholds for HSV values
@@ -162,8 +162,8 @@ void thresh_callback(int, void *) {
     }
     imshow("Contours", drawing);
     String tosend = std::to_string(minEllipse.size.width) + " " + std::to_string(minEllipse.size.height) + " "
-                    + std::to_string(minEllipse.center.x) + std::to_string(minEllipse.center.y) + " "
-                    + std::to_string(minEllipse.angle) + " \n";
+                    + std::to_string(minEllipse.center.x) + " " +std::to_string(minEllipse.center.y) + " "
+                    + std::to_string(minEllipse.angle);
     sendWin(tosend);
 }
 

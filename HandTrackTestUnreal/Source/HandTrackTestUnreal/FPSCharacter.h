@@ -12,6 +12,7 @@
 #include<winsock2.h>
 #include <thread>
 #include <stdlib.h>
+#include <atomic>
 #pragma comment(lib,"ws2_32.lib") //Winsock Library
 #define BUFLEN 512	//Max length of buffer
 #define PORT 9000	//The port on which to listen for incoming data
@@ -26,6 +27,7 @@ class HANDTRACKTESTUNREAL_API AFPSCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	AFPSCharacter();
+	std::atomic<float> EllipseWidth, EllipseHeight, EllipseCenterX, EllipseCenterY, EllipseAngle;
 
 protected:
 	// Called when the game starts or when spawned
