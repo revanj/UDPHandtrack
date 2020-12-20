@@ -2,7 +2,6 @@
 
 
 #include "FPSCharacter.h"
-#include <thread>
 // Sets default values
 AFPSCharacter::AFPSCharacter()
 {
@@ -20,8 +19,6 @@ void AFPSCharacter::BeginPlay()
 	// Display a debug message for five seconds. 
 	// The -1 "Key" value argument prevents the message from being updated or refreshed.
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("We are using FPSCharacter."));
-	std::thread udpthread(&AFPSCharacter::UDPRun, this);
-	udpthread.detach();
 }
 
 // Called every frame
@@ -63,4 +60,3 @@ void AFPSCharacter::Turn(float Value)
 void AFPSCharacter::LookUp(float Value)
 {
 }
-
