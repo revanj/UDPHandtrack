@@ -1,3 +1,0 @@
-D:/opencvHandtrack/CMakeFiles/DisplayImage.dir
-D:/opencvHandtrack/CMakeFiles/edit_cache.dir
-D:/opencvHandtrack/CMakeFiles/rebuild_cache.dir
