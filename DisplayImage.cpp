@@ -164,6 +164,6 @@ void thresh_callback(int, void *) {
     String tosend = std::to_string(minEllipse.size.width) + " " + std::to_string(minEllipse.size.height) + " "
                     + std::to_string(minEllipse.center.x) + " " +std::to_string(minEllipse.center.y) + " "
                     + std::to_string(minEllipse.angle);
-    sendWin(tosend);
+    send(tosend);
 }
 

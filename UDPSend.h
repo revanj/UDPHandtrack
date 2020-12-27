@@ -2,4 +2,4 @@
 
 using std::string;
 
-int sendWin(string str);
+int send(string str);
