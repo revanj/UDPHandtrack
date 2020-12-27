@@ -1,5 +1,4 @@
 CMakeCache.txt
-*.cmake
 CMakeFiles/*
 CMakeScripts/*
 Testing/*
@@ -12,6 +11,9 @@ _deps
 out/
 # Visual Studio 2015 user specific files
 .vs/
+
+# Clion
+.idea/
 
 # Compiled Object files
 *.slo
