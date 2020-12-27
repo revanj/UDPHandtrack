@@ -196,7 +196,7 @@ void thresh_callback(int, void *) {
     int sec_start_y = contours[largestIndex][defect[second_highest_index][0]].y;
     int sec_end_x = contours[largestIndex][defect[second_highest_index][1]].x;
     int sec_end_y = contours[largestIndex][defect[second_highest_index][1]].y;
-    if ( (sec_start_x > sec_end_x && sec_start_y > sec_end_y) && contours[largestIndex][defect[second_highest_index][2]].x > contours[largestIndex][defect[curlicue_index][2]].x){
+    if (   (sec_start_x > sec_end_x) && (sec_start_y > sec_end_y) && contours[largestIndex][defect[second_highest_index][2]].x > contours[largestIndex][defect[curlicue_index][2]].x){
         curlicue_index = second_highest_index;
     }
 
@@ -207,7 +207,7 @@ void thresh_callback(int, void *) {
     int end_y = contours[largestIndex][defect[curlicue_index][1]].y;
     int curlicue_x = contours[largestIndex][defect[curlicue_index][2]].x;
     int curlicue_y = contours[largestIndex][defect[curlicue_index][2]].y;
-    if (start_x > end_x && start_y > end_y){
+    if ( (start_x > end_x)  && start_y > end_y){
         drawContours(drawing, hull,0, color);
         shoot = 0;
         circle(drawing, contours[largestIndex][defect[curlicue_index][2]], 2, point_color, 5 );
@@ -281,6 +281,7 @@ void thresh_callback(int, void *) {
                     + std::to_string(start_y) + " " +std::to_string(end_x) + " "
                     + std::to_string(end_y) + " " + std::to_string(curlicue_x) + " "
                     + std::to_string(curlicue_y);
+    std::cout << tosend << std::endl;
     send(tosend);
 }
 

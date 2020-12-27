@@ -1,9 +1,9 @@
 /*
 	Simple udp client
 */
-
+#include "config.h"
 #include <string>
-#ifdef HAVE_WINSOCK2_H
+#ifndef HAVE_MEMORY_H
 #include <stdio.h>
 #include <winsock2.h>
 #else

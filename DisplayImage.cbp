@@ -82,6 +82,9 @@
 		<Unit filename="/storage/Projects/opencvHandtrack/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
+		<Unit filename="/storage/Projects/opencvHandtrack/config.h.in">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
 		<Unit filename="/storage/Projects/opencvHandtrack/../../../usr/lib64/cmake/opencv4/OpenCVConfig-version.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\usr\lib64\cmake\opencv4\"/>
 		</Unit>
