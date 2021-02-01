@@ -28,4 +28,4 @@ or https://docs.opencv.org/master/d3/d52/tutorial_windows_install.html
 
 If opencv is installed via `pacman`, please install  `vtk` and `hdf5` packages as well.  
 
-After correct installation the program should compile in a cmake environment.
+After correct installation the program should compile in a cmake environment.(Visual Studio, CLion, VSCode...etc)
