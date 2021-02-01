@@ -4,10 +4,28 @@ A program that tracks hand position/rotation/shoot gesture, and sends them via U
 
 # Usage
 Launch the program (an executable) from the commandline with an optional parameter that is the device number of the camera (typically 0, 1, or 2). Get into a dark room and illuminate your left hand with light. Make a gun gesture so that the program could recoginize the orientation of the hand.  
-The program sends a string to the UDP port 
+  
+**The program sends a string to via UDP to port 9000**   
+  
+The data is a string of data seperated by space, in the order below:  
+`shoot`: whether or not the hand is making a "shoot" gesture.  
+`index_x`: the x position of the tip of the index finger on screen, in pixels.  
+`index_y`: the y position of the tip of the index finger on screen, in pixels.  
+`thumb_x`: the x position of the tip of the thumb on screen, in pixels.  
+`thumb_y`: the y position of the tip of the thumb on screen, in pixels.  
+`curlicue_x`: the x position of the curlicue point on screen, in pixels.  
+`curlicue_y`: the y position of the curlicue point on screen, in pixels.  
+  
+Typically the "shoot" gesture looks like this(ducking your thumb):  
+![Image of Shoot](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/17a9aa23-5b9d-4568-8231-f0d865b75825/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210201%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210201T223634Z&X-Amz-Expires=86400&X-Amz-Signature=c2bc70c2452187230a69bff83ad4701800f227e8225b937e298fc8071f2f10a6&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22image.png%22)  
+  
+Use these data as you'd please.  
+
 # Compile
 The program uses cmake. Please install cmake and opencv accroding to   
 https://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html   
 or https://docs.opencv.org/master/d3/d52/tutorial_windows_install.html  
 
-If opencv is installed via `pacman`, please install  `vtk` and `hdf5` packages as well.
+If opencv is installed via `pacman`, please install  `vtk` and `hdf5` packages as well.  
+
+After correct installation the program should compile in a cmake environment.
