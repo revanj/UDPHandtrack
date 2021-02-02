@@ -5,6 +5,11 @@ A program that tracks hand position/rotation/shoot gesture, and sends them via U
 # Usage
 Launch the program (an executable) from the commandline with an optional parameter that is the device number of the camera (typically 0, 1, or 2). Get into a dark room and illuminate your left hand with light. Make a gun gesture so that the program could recoginize the orientation of the hand.  
   
+## The release build:
+(Windows after unzip)> `handtrack_win.exe 2` starts the program with camera #2  
+(Linux with OpenCV properly installed)> `./handtrack_linux_executable 0` starts the program with camera #0  
+Pick the camera that you would like to use.
+  
 **The program sends a string to via UDP to port 9000**   
   
 The data is a string of data seperated by space, in the order below:  
@@ -28,4 +33,4 @@ or https://docs.opencv.org/master/d3/d52/tutorial_windows_install.html
 
 If opencv is installed via `pacman`, please install  `vtk` and `hdf5` packages as well.  
 
-After correct installation of opencv, the program should compile in a cmake environment.(Visual Studio, CLion, VSCode...etc)
+After correct installation of opencv, the program should compile in a cmake-ready environment.(Visual Studio, CLion, VSCode... etc. or just a naked environment)
