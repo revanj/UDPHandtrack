@@ -1,6 +1,6 @@
 # godotHandtrack
 A program that tracks hand position/rotation/shoot gesture, and sends them via UDP.  
-![Image of Handtrack](https://github.com/revanj/UDPHandtrack/blob/main/readme-images/image.png)
+![Image of Handtrack](https://github.com/revanj/UDPHandtrack/blob/main/readme-images/image0.png)
 
 # Usage
 Launch the program (an executable) from the commandline with an optional parameter that is the device number of the camera (typically 0, 1, or 2). Get into a dark room and illuminate your left hand with light. Make a gun gesture so that the program could recoginize the orientation of the hand. You should see some bars with handles that were used to control the thresholding. You could mess around with them a bit to make sure that the Object Detection window properly shows your hand in one single white chunk.
